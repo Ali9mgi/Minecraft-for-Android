@@ -1,0 +1,54 @@
+#include <iostream>
+#include <vector>
+
+class HUD {
+public:
+    int health = 20;      // 20 points = 10 hearts
+    int hunger = 20;      // 20 points = 10 drumsticks
+    int selectedSlot = 0; // 0 to 8
+
+    void drawHUD() {
+        // In a real game, this would draw textures. Here we show the data.
+        std::cout << "\n==========================================" << std::endl;
+        
+        // 1. Draw Health
+        std::cout << "HEALTH: ";
+        for(int i = 0; i < health/2; i++) std::cout << "<3 "; 
+        std::cout << "\n";
+
+        // 2. Draw Crosshair
+        std::cout << "          [ + ]          " << std::endl;
+
+        // 3. Draw Hotbar (Exactly 9 slots)
+        std::cout << "HOTBAR: [";
+        for(int i = 0; i < 9; i++) {
+            if(i == selectedSlot) std::cout << ">X<"; // Highlighted slot
+            else std::cout << " _ ";
+        }
+        std::cout << "]" << std::endl;
+        std::cout << "==========================================\n" << std::endl;
+    }
+
+    void changeSlot(int newSlot) {
+        if(newSlot >= 0 && newSlot <= 8) {
+            selectedSlot = newSlot;
+            std::cout << "Ali switched to slot " << selectedSlot << std::endl;
+        }
+    }
+};
+
+// Integration into your main loop
+int main() {
+    HUD screen;
+    
+    // Simulate Ali playing
+    screen.drawHUD();
+    
+    // Ali takes a hit from a zombie!
+    screen.health -= 2;
+    screen.changeSlot(3); // Ali picks his sword in slot 3
+    
+    screen.drawHUD();
+    
+    return 0;
+}
